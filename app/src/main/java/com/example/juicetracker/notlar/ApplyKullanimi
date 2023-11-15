@@ -1,0 +1,18 @@
+package com.example.juicetracker
+
+fun main() {
+    // Ornek burda yapmaya calisiyorum ama kabul etmiyor. Cunku bir constuctor yazmadim.
+    // lateinit yaptigim class degiskenini apply ile guncelleyebilir miyim?
+    val adam = Person("Hafiz", 29).apply { name = "HAfiz Ramiz" }
+
+}
+
+// Bu sekilde class olusturursam. Class'tan nesne olusturmak istedigim zaman instance field'lara deger gecemiyorum
+class Person {
+    var name: String = ""
+    var age: Int = 0
+    constructor(name: String, age: Int){
+        this.name=name
+        this.age=age
+    }
+}

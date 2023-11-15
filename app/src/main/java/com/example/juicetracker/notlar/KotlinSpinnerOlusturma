@@ -1,0 +1,30 @@
+package com.example.juicetracker.ui.bottomsheet
+
+import android.view.View
+import android.widget.AdapterView
+
+// Normalde Kotlinde Compose olmadan Spinner yapmak icin bu yontem kullanilir. Biz de simdi bunu yapacagiz.
+// Daha sonra bunun Compose ile birlikte nasil kullanabiliriz ona odaklanacagiz. Yani diyelim ki compose'da
+// Spinner yok biz de view'da olustururuz. Sonra onu composa'a cevirir kullaniriz.
+// Simdi Spinner sinifinin bir tane reqired parametre almasini soyledim. Bunu yapmak icinde
+// Primary construcotra yazdim. Yani bu sinifi cafgiran yerde bu instance field'i doldurmasi gerekecek.
+// SImdi bu callback function ne yapiyor. Burdan aldigi Int degerini cagrildigi yere aktaracak. Yani hangi pozisyon secildigini
+// Kendisini cagiran yere aktarmis olacak. Callbacklerin de amaci bu zaten.
+// primary constructor icinde oldugu icin yani bu bir paramtere degil aslinda bir instance field .Yani class degiskeni
+// val ve ya var ile tanimlanmasi gerekiyor.
+class SpinnerAdapter(val onColorChanged: (Int)->Unit):AdapterView.OnItemSelectedListener{
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        // Secilen pozisyon bilgisini cagrildigi yere aktaracak
+        onColorChanged(position)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // Hec bir sey secilmemisse o zaman da sifir gonderdim. Cagrilan tarafta ona gore bir default deger gostercem
+        onColorChanged(0)
+    }
+}
+//AdapterView.OnItemSelectedListener  bir arayuzdur. Bize bir tane Spinner gosterir ve iki metot veriyor.
+// ne yaptigini biliyoruz. Nasil yaptigini bilmiyoruz. Icindeki metotlari doldurarak kullanabilirsin diyor aslinda
+// Detayli bakmak gerekirse AdapterView bir abstract class'tir icinde bir interface var biz onu implemente ettik.
+// Bu arada Interface icinde ne kadar metot ve degisken varsa hepsini implemente etmek zorundayiz.
+

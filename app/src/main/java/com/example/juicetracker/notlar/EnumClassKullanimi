@@ -1,0 +1,90 @@
+enum class Deneme(){
+    S1,
+    S2
+}
+val a=Deneme.S2
+val b=Deneme.S1
+val c =Deneme.values()
+
+enum class CardType(val color: String) {
+    SILVER("gray"),
+    GOLD("yellow"),
+    PLATINUM("black"),
+    BLACK
+}
+
+val ee=CardType.SILVER.name    // name diyince icindeki COnstant'in adina
+val eee=CardType.SILVER.color   // v parametrenin ismini deyince de verilem parameterye ulasiyorum
+
+Baska ornekler
+package com.example.juicetracker
+
+import android.graphics.Color
+
+
+fun main(){
+    println("Deneme")
+
+    val ee=CardType.values()
+    println(ee.size)
+    val eee=CardType.SILVER.color
+    val kirmiziColorCode: Int =Renkler.Kirmizi.colorCode
+    println("ColorCode: $kirmiziColorCode")
+    val kirmiziName=Renkler.Kirmizi.name  // name burda ne dondurecek?
+    println(kirmiziName)  // Name icindeki Constantin ismini donduruyor. Kirmizi dondurecek.
+    val kirmiziLabel=Renkler.Kirmizi.label
+    println(kirmiziLabel)
+    val kirmizi=Renkler.Kirmizi.name   // Name deyince String donduruyormus
+        println(kirmizi)
+}
+
+enum class CardType(val color: String) {
+    SILVER("gray"),
+    GOLD("yellow"),
+    PLATINUM("black"),
+}
+
+val ee=CardType.values()   // name diyince icindeki COnstant'in adina
+val eee=CardType.SILVER.color   // v parametrenin ismini deyince de verilem parameterye ulasiyorum
+
+enum class Renkler(val colorCode:Int, val label: String){
+    Kirmizi(colorCode= Color.RED,label="Kirmizi renktir")  // Her bir rengin int bir karsiligi var. Renk kodu dedim buna ben
+}
+// Bu artik colorCodu donecek. Yani Int deger donecek bende onu component'a renk verirken kullancam.
+//val kirmizi: Int =Renkler.Kirmizi.colorCode
+
+
+
+ENUM BASKA ORNEK KULLANIMI
+
+//// Enum class kullarak renkelri eslestirmeye calisiyorum
+//enum class JuiceColor(val colorCode: Int, @StringRes label: Int) {
+//    RED(Color.RED, R.string.red),
+//    BLUE(Color.BLUE, R.string.blue),
+//    GREEN(Color.GREEN, R.string.green),
+//    CYAN(Color.CYAN, R.string.cyan),
+//    YELLOW(Color.YELLOW, R.string.yellow)
+//}
+// Gorelim diye JuiceColor'i buraya koydum, JuiceColor.values() dedigim zaman icindekileri
+// bir Array icinde bana donduruyor. Yani sonuc boyle doncek
+//val juiceColorListesi: Array<JuiceColor> = JuiceColor.values()
+
+@Composable
+fun ColorSpinnerRow(){
+    // Burda renklere eriscem
+    val juiceColorName = JuiceColor.values().map { juiceColor ->
+        // Array'e map uygulayarak her birine ulastim. SImdi onlari customize ederek dondurebilirim.
+//        juiceColor olan nesne Enum class icindeki her bir ogedir. Ornegin:
+    //    RED(Color.RED, R.string.red),
+        // SImdi bu her bir ogeninin icindeki class degiskenine erismek icin
+//        juiceColor.colorCode dersem  Int degiskenine  juiceColor.label dersem de ikinci degiskenine erismis olurum
+//     juiceColor.name  boyle de dersem her birinin ismini basar Orn: Red, Blue vb. gibi
+    }
+
+    InputRow(inputLabel = "Color") {
+
+    }
+
+}
+
+

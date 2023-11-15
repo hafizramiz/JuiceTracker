@@ -1,0 +1,33 @@
+package com.example.juicetracker
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+
+class EntryDialogFragment:BottomSheetDialogFragment() {
+    // Bu class'tan inherit aldiktan sonra onCreateView 'i override etcem.
+    // Layout Inflater XML kodlarini java diline donusturen siniftir.
+    // Ornegin burdaki gibi. Bu res icindeki XML dosyasini alir ve View nesnesine donusturur,
+    // Burda activity yaptim ama bu ornek olsun diye yaptim. Bu bir view olacak ve icinde bir tane TextView oldugunu dusunelim.
+    var myView: View =layoutInflater.inflate(R.layout.sublayout,null)
+//    Su an bir view olusturdum ama bunu bir layout'a baglamadim
+//    val ll:LinearLayout=LinearLayout() // Burda tam yapamadim.Ama bir nesne olustur ona ekle
+//    ll.add gibisinden yapmak yerine direk icine atmak istedigin layoutu root parametresine ver o kendi atsin
+
+    // Ben burda bir view olusturdum. Simdi view'i bir layout'a eklemem gerekiyor.
+    // root null yaptim cunku ana layout'a bagliyacak. AMa baska bir layout'in icine baglamak istersem buraya onu yaziyorum
+// Yani oraya bir layout gecerek o layouta baglamasini isteyebiliriz.
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Bu metot su anda superini cagiriyor. Ama biz bunu customize edecegiz.
+        return super.onCreateView(inflater, container, savedInstanceState)
+
+    }
+
+}

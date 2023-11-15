@@ -1,0 +1,17 @@
+
+
+class EntryDialogFragment:BottomSheetDialogFragment() {
+// Burda kendi icindeki fonksiyonu override ettim. Return type'i View olan bir fonksiyonu
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Bu metot su anda superini cagiriyor. Ama biz bunu customize edecegiz.
+       // return super.onCreateView(inflater, container, savedInstanceState)
+        // FragmentEntryDialogBinding  tanimli bir siniftir.
+        return FragmentEntryDialogBinding.inflate(inflater,container,false).root
+    // Bu metot buna verdigimiz xml'i kotlin koduna donduruyor. Ve sonunda bize bir view donuyor
+    }
+
+}

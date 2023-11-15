@@ -1,0 +1,10 @@
+FrameLayout stack yani yigin matigiyla calisir.
+ust uste bir kac tane yigdik diyelim. en alttakini almak icin
+en ustten alarak asagiya inmem gerekiyor.
+Yani frame layout viewlari ust uste yerlestirmemizi saglar. Ama linearda yanyana geliyordu.
+
+Layout gravity ozelligi layout'ta nerede yerlesecegini gostermk icin kullanilir.
+android:layout_gravity="center"
+
+Dp yzarken nokta koymuyoruz burda.Ornek
+ android:layout_marginRight="100dp">

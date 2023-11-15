@@ -1,0 +1,131 @@
+package com.example.juicetracker.ui.bottomsheet
+
+import android.graphics.Color
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.viewinterop.AndroidView
+import com.example.juicetracker.R
+import com.example.juicetracker.data.JuiceColor
+
+// Normalde Kotlinde Compose olmadan Spinner yapmak icin bu yontem kullanilir. Biz de simdi bunu yapacagiz.
+// Daha sonra bunun Compose ile birlikte nasil kullanabiliriz ona odaklanacagiz. Yani diyelim ki compose'da
+// Spinner yok biz de view'da olustururuz. Sonra onu composa'a cevirir kullaniriz.
+// Simdi Spinner sinifinin bir tane reqired parametre almasini soyledim. Bunu yapmak icinde
+// Primary construcotra yazdim. Yani bu sinifi cafgiran yerde bu instance field'i doldurmasi gerekecek.
+// SImdi bu callback function ne yapiyor. Burdan aldigi Int degerini cagrildigi yere aktaracak. Yani hangi pozisyon secildigini
+// Kendisini cagiran yere aktarmis olacak. Callbacklerin de amaci bu zaten.
+// primary constructor icinde oldugu icin yani bu bir paramtere degil aslinda bir instance field .Yani class degiskeni
+// val ve ya var ile tanimlanmasi gerekiyor.
+class SpinnerAdapter(val onColorChanged: (Int) -> Unit) : AdapterView.OnItemSelectedListener {
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        // Secilen pozisyon bilgisini cagrildigi yere aktaracak
+        onColorChanged(position)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // Hec bir sey secilmemisse o zaman da sifir gonderdim. Cagrilan tarafta ona gore bir default deger gostercem
+        onColorChanged(0)
+    }
+}
+//AdapterView.OnItemSelectedListener  bir arayuzdur. Bize bir tane Spinner gosterir ve iki metot veriyor.
+// ne yaptigini biliyoruz. Nasil yaptigini bilmiyoruz. Icindeki metotlari doldurarak kullanabilirsin diyor aslinda
+// Detayli bakmak gerekirse AdapterView bir abstract class'tir icinde bir interface var biz onu implemente ettik.
+// Bu arada Interface icinde ne kadar metot ve degisken varsa hepsini implemente etmek zorundayiz.
+
+
+@Composable
+fun ColorSpinnerRow(
+     colorSpinnerPosition: Int,
+    onColorChange: (Int) -> Unit,
+) {
+    // Burda renklere eriscem
+    // Array'e map uygulayarak her birine ulastim. SImdi onlari customize ederek dondurebilirim.
+//        juiceColor olan nesne Enum class icindeki her bir ogedir. Ornegin:
+    //    RED(Color.RED, R.string.red),
+    // SImdi bu her bir ogeninin icindeki class degiskenine erismek icin
+//        juiceColor.colorCode dersem  Int degiskenine  juiceColor.label dersem de ikinci degiskenine erismis olurum
+//     juiceColor.name  boyle de dersem her birinin ismini basar Orn: Red, Blue vb. gibi
+    val juiceColorNameList = JuiceColor.values().map { juiceColor ->
+        stringResource(id = juiceColor.label)
+    }
+
+    InputRow(inputLabel = "Color") {
+        // Simdi burda Spinner cagiracagiz. Spinner bir View class oldugu icin Onu composta kullanmak icin
+        // AndroidView classini kullanmamiz gerekiyor. Yani soyle: InputRow bir composable bekliyor bizden bizim de
+        // elimizde bir View var. Onu Composable'a cevirip vermemiz gerekiyor. ANdroidView fonksiyonu
+        // Bir View'i ve ya birden fazla View hiyerarsisini Composable'a ceviriyor.Peki nasil calisir?
+        // 3 Tane farkli parametre aliyor.
+        // 1. ci factory lambda : View'i olusturan fonksiyon.
+        // 2. ci update callback: View infilate edildiginde cagrilan callback fonksiyonu
+        // 3. cu modifier
+        AndroidView(modifier = Modifier.fillMaxWidth(),
+            // factory burda context alacak ve Spinner dondurecek.Aldigi context'i de Spinner'a verecek
+            factory = { context ->
+//                 Burdaki factory callback bir View objesi dondurecek. Burdaki view objemiz Spinner'dir
+                // Bu sekilde default oalrak bos spinner verdi. Simdi bunun icine data vermemiz gerekiyor ve
+                // diger optional parametrlerini vermemiz gerekiyor.
+                Spinner(context).apply {
+                    adapter = ArrayAdapter(
+                        context,
+                        //R.layout.custom_dropdown_item,
+                        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                        juiceColorNameList
+                    )
+                }
+
+                // Simdi  RecyclerView'da oldugu gibi RecyclerView.Adapter ne yapiyordu? RecyclerView'a data sagliyordu
+                // Bizim simdi buna da data saglamamiz gerekiyor. Bunu da Adapter ile yapacagiz.
+            },
+            // Burde update parametresi var. Update callback ise factory tarafindan dondurulen View objesini parametre olarak aliyor.
+
+            update = {
+                // Burdaki spinner  hangi spinner'dir ? factory tarafindan donen spinner.
+                spinner->
+                spinner.setSelection(colorSpinnerPosition)
+                spinner.onItemSelectedListener=SpinnerAdapter(onColorChange)
+            }
+        )
+    }
+
+}
+
+/* public ArrayAdapter(@NonNull Context context, @LayoutRes int resource,
+            @NonNull List<T> objects) {
+        this(context, resource, 0, objects);
+    }
+     Array adapter bizden uc tane farkli parametre bekliyor. Ensondaki bir liste biz de onu verdik buna yukarda
+    */
+
+
+@Composable
+fun InputRow(
+    inputLabel: String,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = inputLabel,
+            fontWeight = FontWeight.SemiBold,
+            modifier = modifier.weight(1f)
+        )
+        Box(modifier = Modifier.weight(2f)) {
+            content()
+        }
+    }
+}

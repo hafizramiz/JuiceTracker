@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/trackerFragment">
+    <!-- tool: layout icinde layout dosyasindaki layoutu veriyorum
+    // Burda baslangic  nagivasyonu olarak bu sayfa ile
+    baslamasini istiyorum
+    -->
+
+    <fragment
+        android:id="@+id/trackerFragment"
+        android:name="com.example.juicetracker.TrackerFragment"
+        android:label="fragment_tracker"
+        tools:layout="@layout/fragment_tracker">
+        <action
+            android:id="@+id/action_trackerFragment_to_entryDialogFragment"
+            app:destination="@id/entryDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/entryDialogFragment"
+        android:name="com.example.juicetracker.EntryDialogFragment"
+        android:label="fragment_entry_dialog"
+        tools:layout="@layout/fragment_entry_dialog">
+
+    </dialog>
+</navigation>
+    <!-- Buraya tools layout yazmazsam eklemiyor. Yani sunu
+    tools:layout="@layout/fragment_entry_dialog"
+      yani dialog olarak gosterecegi fragmenti belirttim-->
+

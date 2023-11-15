@@ -1,0 +1,67 @@
+LinearLayout Kullanimi
+wrap_content- icindeki icerik kadar yer kapla
+match_parent - kokun kapladigi butun alana yayilmasini istersek bunu kullaniriz.
+default olarak yanyana olur. Istersek orientation'dan vertical yapabilirsin
+Linear layout'da ekrana sigmazsa eger kalanlari yazdirmaz.Yani tasani almaz
+Layout weight kullanimi nedir?
+flex gibi calisir.
+Ornek Burda ikisine de bir verdim. O zaman layout 2 olarak gorur ve her ikisine de bir verir yani ikisini
+de ayni sekilde buyutur. Ayrica layout weight degerini yazarsan  View'a verdigin width degeri override edilmis olur
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_weight="1"
+       // Buna 4 versem digerine bir/ Bunu digerinin 4 kati kadar buyutecek.Epanded'dai flex gibi calisiyor,
+       android:layout_weight="4"
+       // ANdroid soyle hesaplar: 4+1=5
+       Ekranin hepsine 5 der. Sonra usttekine 4 alttakine 1 verir.
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_weight="1"
+        >
+    </Button>
+
+</LinearLayout>
+
+Bide layout gravity ozelligi var. O da view nesnesini Layout icinde konumlandirmak icin kullanilir.
+Ornek kullanimi
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    // Burda layout'in orienatation'nu degistirip vertical da yapabilirz.
+    >
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        // Buraya gravity ekleyerek icindeki cocugunu yerlestirme yapabiliriz
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_gravity="bottom"
+        android:layout_weight="4"
+        >
+    </Button>
+
+</LinearLayout>
